@@ -14,5 +14,6 @@
 4) Дождитесь появление в консоли надписи "Build success"  
 5) Введите команду:  
 - **mvn test** -Dtest=MobileOperator -Dbrowser=chrome verify  
+
 Для выбора запускаемого браузера изменить **chrome** на желаемый браузер(chrome,firefox,opera)  
 После чего будет произведен запуск программы  
