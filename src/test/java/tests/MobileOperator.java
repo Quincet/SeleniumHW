@@ -1,14 +1,10 @@
 package tests;
 
 import org.junit.Test;
-import org.openqa.selenium.By;
-import org.openqa.selenium.SearchContext;
 import utils.Runner;
 import utils.TinkoffMobilePage;
 
 public class MobileOperator extends Runner {
-
-
     @Test
     public void testMobileOperatorTestCase() {
         TinkoffMobilePage page = picker.tinkoffMobilePage;
