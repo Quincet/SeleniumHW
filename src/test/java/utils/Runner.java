@@ -5,7 +5,7 @@ import org.junit.Before;
 
 public abstract class Runner {
 
-    public static ThreadLocal<Picker> threadManager = new ThreadLocal<>();
+    private static ThreadLocal<Picker> threadManager = new ThreadLocal<>();
     protected static Picker picker;
 
     @Before

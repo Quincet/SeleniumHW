@@ -1,4 +1,4 @@
-package utils;
+package Pages;
 
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
@@ -11,8 +11,8 @@ import static junit.framework.TestCase.assertEquals;
 
 public class TinkoffMobilePage {
 
-    WebDriver driver;
-    WebDriverWait driverWait;
+    private WebDriver driver;
+    private WebDriverWait driverWait;
     @FindBy(name = "fio")
     private WebElement fio;
     @FindBy(name = "phone_mobile")
@@ -44,23 +44,23 @@ public class TinkoffMobilePage {
                     return true;
         });
     }
-    public void changeNatyinalyti(){
+    public void changeNationality(){
         ignoringAnimation(x -> {
                     driver.findElement(By.xpath("//span[@class='ui-select__value']")).click();
                     driver.findElement(By.xpath("//span[contains(text(),'Не имею гражданства РФ')]")).click();
                     return true;
                 });
     }
-    public void fillNationalyti(){
-        changeNatyinalyti();
+    public void fillNationality(){
+        changeNationality();
         ignoringAnimation(x -> {
                     nationality.sendKeys("nestrana999");
                     email.click();
                     return true;
                 });
     }
-    public void clickNatyonalyti(){
-        changeNatyinalyti();
+    public void clickNationality(){
+        changeNationality();
         ignoringAnimation(x -> {
             nationality.click();
             email.click();

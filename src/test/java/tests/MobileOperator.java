@@ -2,7 +2,7 @@ package tests;
 
 import org.junit.Test;
 import utils.Runner;
-import utils.TinkoffMobilePage;
+import Pages.TinkoffMobilePage;
 
 public class MobileOperator extends Runner {
     @Test
@@ -10,7 +10,7 @@ public class MobileOperator extends Runner {
         TinkoffMobilePage page = picker.tinkoffMobilePage;
         page.toSite();
         page.clickMainForms();
-        page.clickNatyonalyti();
+        page.clickNationality();
         page.assertClickgForm();
     }
     @Test
@@ -18,7 +18,7 @@ public class MobileOperator extends Runner {
         TinkoffMobilePage page = picker.tinkoffMobilePage;
         page.toSite();
         page.fillMainForms();
-        page.fillNationalyti();
+        page.fillNationality();
         page.assertFillingForm();
     }
 }

@@ -18,19 +18,15 @@ import java.io.IOException;
 public class BrowserFactory {
 
     public static class MyListener extends AbstractWebDriverEventListener {
-
         Logger logger = LoggerFactory.getLogger(BrowserFactory.class);
-
         @Override
         public void beforeFindBy(By by, WebElement element, WebDriver driver) {
             logger.info("Обращение к элементу " + by);
         }
-
         @Override
         public void afterFindBy(By by, WebElement element, WebDriver driver) {
             logger.info("Найден элемент " + by);
         }
-
         @Override
         public void onException(Throwable throwable, WebDriver driver) {
             File tmp = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
