@@ -7,6 +7,11 @@
     <groupId>seleniumHomeWork</groupId>
     <artifactId>fintechHWS</artifactId>
     <version>1.0-SNAPSHOT</version>
+    <properties>
+        <browser>chrome</browser>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+    </properties>
     <dependencies>
         <dependency>
             <groupId>junit</groupId>
@@ -38,6 +43,7 @@
         </dependency>
     </dependencies>
     <build>
+        <defaultGoal>install</defaultGoal>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -54,7 +60,7 @@
                 <version>2.21.0</version>
                 <configuration>
                     <!--стратегия параллелизации-->
-                    <parallel>classes</parallel>
+                    <parallel>methods</parallel>
                     <!--<parallel>classes</parallel>-->
                     <!--<parallel>all</parallel>-->
 

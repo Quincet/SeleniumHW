@@ -1,11 +1,13 @@
-package utils;
+package tests;
 
+import app.Picker;
+import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 
 public abstract class Runner {
 
-    private static ThreadLocal<Picker> threadManager = new ThreadLocal<>();
+    public static ThreadLocal<Picker> threadManager = new ThreadLocal<>();
     protected static Picker picker;
 
     @Before
@@ -17,6 +19,11 @@ public abstract class Runner {
         picker = new Picker();
         threadManager.set(picker);
     }
+    /*@After
+    public void close(){
+        picker.quit();
+        threadManager.remove();
+    }*/
 
     @AfterClass
     public static void tearDown() {

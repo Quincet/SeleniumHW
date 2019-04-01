@@ -1,8 +1,8 @@
 package tests;
 
-import Pages.GooglePage;
-import Pages.TinkoffDocuments;
-import Pages.TinkoffMobilePage;
+import pages.GooglePage;
+import pages.TinkoffDocuments;
+import pages.TinkoffMobilePage;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;

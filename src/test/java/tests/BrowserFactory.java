@@ -1,4 +1,4 @@
-package utils;
+package tests;
 
 import com.google.common.io.Files;
 import org.openqa.selenium.*;
@@ -14,6 +14,8 @@ import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 public class BrowserFactory {
 
@@ -47,9 +49,13 @@ public class BrowserFactory {
                 ffOpt.addPreference("dom.webnotifications.enabled", false);
                 return new FirefoxDriver();
             case "chrome":
-                ChromeOptions chromeInvisibleOpt = new ChromeOptions();
-                chromeInvisibleOpt.addArguments("--disable-notifications");
-                return new ChromeDriver(chromeInvisibleOpt);
+                ChromeOptions chromeOpt = new ChromeOptions();
+                chromeOpt.addArguments("--disable-notifications");
+                Map<String, Object> preferences = new HashMap<>();
+                preferences.put("plugins.always_open_pdf_externally", true);
+                preferences.put("download.default_directory", System.getProperty("user.dir") + "/src/test/resources/documents/");
+                chromeOpt.setExperimentalOption("prefs", preferences);
+                return new ChromeDriver(chromeOpt);
             case "opera":
                 OperaOptions options = new OperaOptions();
                 options.addArguments("--disable-notifications");
