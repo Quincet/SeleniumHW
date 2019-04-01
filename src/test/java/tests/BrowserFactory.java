@@ -54,6 +54,7 @@ public class BrowserFactory {
                 Map<String, Object> preferences = new HashMap<>();
                 preferences.put("plugins.always_open_pdf_externally", true);
                 preferences.put("profile.default_content_settings.popups", 0);
+                preferences.put("download.prompt_for_download",false);
                 preferences.put("download.default_directory", System.getProperty("user.dir") + "/src/test/resources/documents/");
                 chromeOpt.setExperimentalOption("prefs", preferences);
                 chromeOpt.addArguments("--test-type");
