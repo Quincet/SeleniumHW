@@ -13,19 +13,18 @@ import static org.junit.Assert.*;
 
 public class MobileOperator extends Runner {
     @Test
-    public void testMobileOperatorTestCase() {
+    public void clickingMainForms() {
         TinkoffMobilePage page = picker.getTinkoffMobilePage();
-        page.toSiteTinkoff();
+        page.toSiteTinkoffMobile();
         page.clickMainForms();
         assertEquals("Укажите ваше ФИО", picker.getDriver().findElement(By.xpath("//div[contains(@class,'fio')]//div[contains(@class,'error-message')]")).getText());
         assertEquals("Необходимо указать номер телефона", picker.getDriver().findElement(By.xpath("//div[contains(@class,'tel')]//div[contains(@class,'error-message')]")).getText());
-        assertEquals("Поле обязательное", picker.getDriver()
-                .findElement(By.xpath("//input[@name='temp_non_resident_nationality']/following::div[contains(@class,'error-message')]")).getText());
+        assertEquals("Поле обязательное", picker.getDriver().findElement(By.xpath("//input[@name='temp_non_resident_nationality']/following::div[contains(@class,'error-message')]")).getText());
     }
     @Test
-    public void testMobileOperatorTestCase2() {
+    public void fillingUnvalidValuesMainForm() {
         TinkoffMobilePage page = picker.getTinkoffMobilePage();
-        page.toSiteTinkoff();
+        page.toSiteTinkoffMobile();
         page.fillMainForms("Невалид --123","254564689216","unvalid","nonnat");
         assertEquals("Допустимо использовать только буквы русского алфавита и дефис", picker.getDriver()
                 .findElement(By.cssSelector("div[class *= fio] [class *= error-message]")).getText());
@@ -48,7 +47,7 @@ public class MobileOperator extends Runner {
     @Test
     public void changeRegion(){
         TinkoffMobilePage pageTinkoffMobile = picker.getTinkoffMobilePage();
-        pageTinkoffMobile.toSiteTinkoff();
+        pageTinkoffMobile.toSiteTinkoffMobile();
         pageTinkoffMobile.changeRegion("Москва");
         assertEquals("Москва и Московская область",pageTinkoffMobile.getCurrentRegion());
         pageTinkoffMobile.refresCurrentPage();
@@ -80,7 +79,7 @@ public class MobileOperator extends Runner {
     public void notActiveButton(){
         TinkoffMobilePage page = picker.getTinkoffMobilePage();
         WebDriver driver = picker.getDriver();
-        page.toSiteTinkoff();
+        page.toSiteTinkoffMobile();
         Select select = new Select(Enums.SelectLists.Calls,driver);
         select.changeList("0 минут");
         select = select.changeTargetField(Enums.SelectLists.Internet);

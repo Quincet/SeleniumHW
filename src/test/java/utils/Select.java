@@ -4,7 +4,6 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import java.time.Duration;
 import java.util.concurrent.TimeUnit;
 
 public class Select{
@@ -19,7 +18,7 @@ public class Select{
     }
     private void openList(){
         driverWait.until(x->{
-            x.findElement(By.xpath(String.format("//span[text()='%s']/parent::div//span[@class='ui-select__title-flex-text' or @class ='ui-select__value']",list))).click();
+            x.findElement(By.xpath(String.format("//select[@name='%s']/parent::div/div",list))).click();
             return true;
         });
     }
@@ -36,7 +35,7 @@ public class Select{
         }
     }
     public String getCurrentValueList(){
-        return driverWait.until(x-> x.findElement(By.xpath(String.format("//span[text(),'%s']/parent::div//span[@class='ui-select__title-flex-text' or @class='ui-select__value']",list))).getText());
+        return driverWait.until(x-> x.findElement(By.xpath(String.format("//select[@name='%s']/parent::div//span[contains(@class,'title-flex-text') or contains(@class,'value')]",list))).getText());
     }
     public Select changeTargetField(Enums.SelectLists selectedList){
         return new Select(selectedList,driver);

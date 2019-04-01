@@ -12,25 +12,24 @@ public class TinkoffMobilePage extends Page {
     }
 
     public void clickMainForms(){
-        driverWait.until(x->{
-            x.findElement(By.xpath("//input[@name = 'fio']")).click();
-            x.findElement(By.xpath("//input[@name='phone_mobile']")).click();
-            changeNationality();
-            x.findElement(By.xpath("//input[@name='temp_non_resident_nationality']")).click();
-            x.findElement(By.xpath("//input[@name='email']")).click();
-            return true;
-        });
+        driver.findElement(By.xpath("//input[@name = 'fio']")).click();
+        driver.findElement(By.xpath("//input[@name='phone_mobile']")).click();
+        changeNationality();
+        driver.findElement(By.xpath("//input[@name='temp_non_resident_nationality']")).click();
+        driver.findElement(By.xpath("//input[@name='email']")).click();
+        if(!hasElement(By.xpath("//div[contains(@class,'fio')]//div[contains(@class,'error-message')]"))
+                | !hasElement(By.xpath("//div[contains(@class,'tel')]//div[contains(@class,'error-message')]"))
+                | !hasElement(By.xpath("//input[@name='temp_non_resident_nationality']/following::div[contains(@class,'error-message')]"))){
+            clickMainForms(); //иногда некоторые формы просто не кликаются, приходится выполнять проверку на наличии ошибок на странице
+        }
     }
     public void fillMainForms(String fio,String phone,String email,String nat){
-        driverWait.until(x->{
-            x.findElement(By.cssSelector("input[name=fio]")).sendKeys(fio);
-            x.findElement(By.cssSelector("input[name=phone_mobile]")).sendKeys(phone);
-            x.findElement(By.cssSelector("input[name=email]")).sendKeys(email);
-            changeNationality();
-            x.findElement(By.cssSelector("input[name=temp_non_resident_nationality]")).sendKeys(nat);
-            x.findElement(By.cssSelector("input[name=email]")).click();
-            return true;
-        });
+        driver.findElement(By.cssSelector("input[name=fio]")).sendKeys(fio);
+        driver.findElement(By.cssSelector("input[name=phone_mobile]")).sendKeys(phone);
+        driver.findElement(By.cssSelector("input[name=email]")).sendKeys(email);
+        changeNationality();
+        driver.findElement(By.cssSelector("input[name=temp_non_resident_nationality]")).sendKeys(nat);
+        driver.findElement(By.cssSelector("input[name=email]")).click();
     }
     public void changeRegion(String region) {
         ifHasElementClick(By.xpath("//span[contains(@class,'Region') and contains(@class,'option') and not(contains(@class,'Rejection'))]"));
@@ -45,7 +44,7 @@ public class TinkoffMobilePage extends Page {
                 driver.findElement(By.xpath("//div[@class='ui-form-app-popup-close-button']")).click();
                 changeRegion(region);
             }
-        } catch (StaleElementReferenceException ex) {
+        } catch (StaleElementReferenceException ex) { //вываливается ошибка иногда, так как окно с выбором регионов так и не пропадает, приходится использовать замыкание
             refresCurrentPage();
             changeRegion(region);
         }
@@ -60,7 +59,7 @@ public class TinkoffMobilePage extends Page {
         driver.findElement(By.cssSelector("span.ui-select__value")).click();
         driver.findElement(By.xpath("//span[contains(text(),'Не имею гражданства РФ')]")).click();
     }
-    public void toSiteTinkoff(){
+    public void toSiteTinkoffMobile(){
         goToPage("https://www.tinkoff.ru/mobile-operator/tariffs/");
     }
 }

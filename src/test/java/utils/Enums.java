@@ -4,17 +4,17 @@ public class Enums {
     public enum SelectLists{
         Internet{
             public String getNameOfSelector() {
-                return "Интернет";
+                return "internet";
             }
         },
         Calls{
             public String getNameOfSelector() {
-                return "Звонки";
+                return "calls";
             }
         },
         Nationality{
             public String getNameOfSelector() {
-                return "Гражданство";
+                return "non_resident";
             }
         };
         public abstract String getNameOfSelector();
