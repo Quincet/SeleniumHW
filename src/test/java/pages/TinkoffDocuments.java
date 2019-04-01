@@ -22,14 +22,14 @@ public class TinkoffDocuments extends Page {
             List<WebElement> documents = driver.findElements(By.xpath("//a[@target='_blank']"));
             WebElement file = documents.get((int)(Math.random()*documents.size()));
             String fileName = file.getAttribute("href").replace("https://static.tinkoff.ru/documents/mvno_documents/promo/","");
-            Path filePath = Paths.get(System.getProperty("user.dir") + "/src/test/resources/documents/"+fileName).toAbsolutePath();
+            Path filePath = Paths.get(System.getProperty("user.dir") + "/src/test/resources/"+fileName).toAbsolutePath();
             Files.deleteIfExists(filePath);
             file.click();
             File filePdf = new File(filePath.toString());
             while (!filePdf.exists()){
                 Thread.sleep(250);
             }
-            logger.info(String.format("Файл скачался по пути %s", Paths.get(System.getProperty("user.dir") + "/src/test/resources/documents/").toAbsolutePath()));
+            logger.info(String.format("Файл скачался по пути %s", Paths.get(System.getProperty("user.dir") + "/src/test/resources/").toAbsolutePath()));
         } catch (IOException |InterruptedException ex){
             ex.printStackTrace();
         }

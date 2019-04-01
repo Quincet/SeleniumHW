@@ -55,7 +55,7 @@ public class BrowserFactory {
                 preferences.put("plugins.always_open_pdf_externally", true);
                 preferences.put("profile.default_content_settings.popups", 0);
                 preferences.put("download.prompt_for_download",false);
-                preferences.put("download.default_directory", System.getProperty("user.dir") + "/src/test/resources/documents/");
+                preferences.put("download.default_directory", System.getProperty("user.dir") + "/src/test/resources/");
                 chromeOpt.setExperimentalOption("prefs", preferences);
                 chromeOpt.addArguments("--test-type");
                 return new ChromeDriver(chromeOpt);
