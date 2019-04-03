@@ -1,15 +1,16 @@
 package tests;
 
+import lombok.var;
+import org.junit.Test;
+import org.openqa.selenium.By;
 import pages.GooglePage;
 import pages.TinkoffDocuments;
 import pages.TinkoffMobilePage;
-import org.junit.Test;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 import utils.*;
 
 import static junit.framework.TestCase.assertEquals;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertTrue;
 
 public class MobileOperator extends Runner {
     @Test
@@ -55,21 +56,21 @@ public class MobileOperator extends Runner {
         String priceForMoskov = pageTinkoffMobile.getCurrentPriceForSim();
         pageTinkoffMobile.changeRegion("Краснодар");
         assertNotEquals(pageTinkoffMobile.getCurrentRegion(),priceForMoskov);
-        Select selectors = new Select(Enums.SelectLists.Internet,picker.getDriver());//     Дальше использование вспомогательных
+        var selectors = pageTinkoffMobile.setAndGetSelect(Enums.SelectLists.Internet);//     Дальше использование вспомогательных
         selectors.changeList("Безлимитный интернет");                       //     классов для проверки общей цены с макс тарифами
-        selectors = selectors.changeTargetField(Enums.SelectLists.Calls);
+        selectors.changeTargetField(Enums.SelectLists.Calls);
         selectors.changeList("Безлимитные минуты");
-        CheckBox checkBoxes = new CheckBox(Enums.CheckBoxes.UnlimitedSms,picker.getDriver());
+        var checkBoxes = pageTinkoffMobile.setAndGetCheckBox(Enums.CheckBoxes.UnlimitedSms);
         checkBoxes.setStatus(true);
         checkBoxes.changeTargetField(Enums.CheckBoxes.ModemMode);
         checkBoxes.setStatus(true);
         String priceForKrasnodar = pageTinkoffMobile.getCurrentPriceForSim();
         pageTinkoffMobile.changeRegion("Москва");
-        selectors = selectors.changeTargetField(Enums.SelectLists.Internet);
+        selectors.changeTargetField(Enums.SelectLists.Internet);
         selectors.changeList("Безлимитный интернет");
-        selectors = selectors.changeTargetField(Enums.SelectLists.Calls);
+        selectors.changeTargetField(Enums.SelectLists.Calls);
         selectors.changeList("Безлимитные минуты");
-        checkBoxes = checkBoxes.changeTargetField(Enums.CheckBoxes.UnlimitedSms);
+        checkBoxes.changeTargetField(Enums.CheckBoxes.UnlimitedSms);
         checkBoxes.setStatus(true);
         checkBoxes.changeTargetField(Enums.CheckBoxes.ModemMode);
         checkBoxes.setStatus(true);
@@ -78,22 +79,21 @@ public class MobileOperator extends Runner {
    @Test
     public void notActiveButton(){
         TinkoffMobilePage page = picker.getTinkoffMobilePage();
-        WebDriver driver = picker.getDriver();
         page.toSiteTinkoffMobile();
-        Select select = new Select(Enums.SelectLists.Calls,driver);
+        var select = page.setAndGetSelect(Enums.SelectLists.Calls);
         select.changeList("0 минут");
-        select = select.changeTargetField(Enums.SelectLists.Internet);
+        select.changeTargetField(Enums.SelectLists.Internet);
         select.changeList("0 ГБ");
-        TextInput textInput = new TextInput(Enums.TextInputs.Fio,driver);
+        var textInput = page.setAndGetTextInput(Enums.TextInputs.Fio);
         textInput.setTextInTextArea("Генадий Васильевич Василий");
-        textInput = textInput.changeTargetField(Enums.TextInputs.Telephone);
+        textInput.changeTargetField(Enums.TextInputs.Telephone);
         textInput.setTextInTextArea("9999999999");
-        CheckBox checkBoxex = new CheckBox(Enums.CheckBoxes.SocialNetworks,picker.getDriver());
+        var checkBoxex = page.setAndGetCheckBox(Enums.CheckBoxes.SocialNetworks);
         checkBoxex.setStatus(false);
-        checkBoxex = checkBoxex.changeTargetField(Enums.CheckBoxes.Messagers);
+        checkBoxex.changeTargetField(Enums.CheckBoxes.Messagers);
         checkBoxex.setStatus(false);
         assertEquals(page.getCurrentPriceForSim(),"Общая цена: 0 \u20BD");
-        Button button = new Button(driver);
+        var button = page.getButton();
         button.clickButton();
         assertTrue(button.hasButton());//почему то кнопка активна даже если выполняются условия из тест кейса
     }
