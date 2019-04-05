@@ -69,27 +69,23 @@ public class TinkoffMobilePage extends Page {
     }
 
     public Select setAndGetSelect(Enums.SelectLists selectLists) {
-        return new Select(selectLists,driver);
+        return new Select(selectLists);
     }
     public TextInput setAndGetTextInput(Enums.TextInputs textInputs) {
-        return new TextInput(textInputs,driver);
+        return new TextInput(textInputs);
     }
     public CheckBox setAndGetCheckBox(Enums.CheckBoxes checkBoxes) {
-        return new CheckBox(checkBoxes,driver);
+        return new CheckBox(checkBoxes);
     }
     public Button getButton(){
-        return new Button(driver);
+        return new Button();
     }
 
     public class Select{
         private String list;
-        private final WebDriver driver;
-        private final WebDriverWait driverWait;
 
-        private Select(Enums.SelectLists selectLists, WebDriver driver) {
-            this.driver = driver;
+        private Select(Enums.SelectLists selectLists) {
             changeTargetField(selectLists);
-            driverWait = new WebDriverWait(driver,10);
         }
         private void openList(){
             driverWait.until(x->{
@@ -99,12 +95,12 @@ public class TinkoffMobilePage extends Page {
         }
         public void changeList(String newValue){
             openList();
-            if(hasValue(newValue)) {
+            if(hasElement(By.xpath(String.format("//*[text() = '%s']",newValue)))) {
                 driverWait.until(x -> {
                     x.findElement(By.xpath(String.format("//span[text()= '%s' and not(@class = 'ui-select__value')]", newValue))).click();
                     return true;
                 });
-            }else{
+            } else {
                 System.out.println("Не имеется такого значения");
                 openList();
             }
@@ -115,21 +111,14 @@ public class TinkoffMobilePage extends Page {
         public void changeTargetField(Enums.SelectLists selectedList){
             list = selectedList.getNameOfSelector();
         }
-        private boolean hasValue(String value){
-            driver.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
-            boolean isExist = driver.findElements(By.xpath(String.format("//*[text() = '%s']",value))).size() > 0;
-            driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-            return isExist;
-        }     //на форме фиг знает что творится, пытался получить список элементов по xpath //select[@name='неймэлемента']/option
+            //на форме фиг знает что творится, пытался получить список элементов по xpath //select[@name='неймэлемента']/option
         // но,например, по гигабайтам просто текст не достается и всё, по минутам нормально
     }
 
     public class CheckBox {
         private String idCheckBox;
-        private final WebDriver driver;
 
-        private CheckBox(Enums.CheckBoxes checkBox, WebDriver driver) {
-            this.driver = driver;
+        private CheckBox(Enums.CheckBoxes checkBox) {
             changeTargetField(checkBox);
         }
         public void setStatus(boolean status){
@@ -152,10 +141,8 @@ public class TinkoffMobilePage extends Page {
 
     public class TextInput{
         private By xPathTextArea;
-        private final WebDriver driver;
 
-        private TextInput(Enums.TextInputs textInputs, WebDriver driver) {
-            this.driver = driver;
+        private TextInput(Enums.TextInputs textInputs) {
             changeTargetField(textInputs);
         }
         public void setTextInTextArea(String text) {
@@ -181,11 +168,6 @@ public class TinkoffMobilePage extends Page {
 
     public class Button{
         private final By buttonXpath = By.xpath("//button[contains(@class,'Button__button')]");
-        private final WebDriver driver;
-
-        private Button(WebDriver driver) {
-            this.driver = driver;
-        }
 
         public boolean isButtonActive(){
             return driver.findElement(buttonXpath).isEnabled();

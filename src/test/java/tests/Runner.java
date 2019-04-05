@@ -1,7 +1,6 @@
 package tests;
 
 import app.Picker;
-import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 
@@ -19,7 +18,7 @@ public abstract class Runner {
         picker = new Picker();
         threadManager.set(picker);
     }
-    /*@After
+    /*@After // используется в режиме без переиспользования браузера
     public void close(){
         picker.quit();
         threadManager.remove();

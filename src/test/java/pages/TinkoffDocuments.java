@@ -5,6 +5,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -26,8 +27,10 @@ public class TinkoffDocuments extends Page {
             Files.deleteIfExists(filePath);
             file.click();
             File filePdf = new File(filePath.toString());
-            while (!filePdf.exists()){
-                Thread.sleep(250);
+            for (int loop = 0;!filePdf.exists();loop++){
+                if(loop > 20)
+                    throw new FileNotFoundException("Не скачался файл");
+                Thread.sleep(500);
             }
             logger.info(String.format("Файл скачался по пути %s", Paths.get(System.getProperty("user.dir") + "/src/test/resources/").toAbsolutePath()));
         } catch (IOException |InterruptedException ex){

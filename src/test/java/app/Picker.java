@@ -30,7 +30,7 @@ public class Picker {
     }
 
     private WebDriver getNewDriver() {
-        return BrowserFactory.getBrowser("chrome");
+        return BrowserFactory.getBrowser();
     }
 
     public void quit() {
