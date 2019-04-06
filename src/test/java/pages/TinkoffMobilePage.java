@@ -5,10 +5,7 @@ import org.openqa.selenium.Keys;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import utils.Enums;
-
-import java.util.concurrent.TimeUnit;
 
 public class TinkoffMobilePage extends Page {
 
@@ -50,7 +47,7 @@ public class TinkoffMobilePage extends Page {
                 changeRegion(region);
             }
         } catch (StaleElementReferenceException ex) { //вываливается ошибка иногда, так как окно с выбором регионов так и не пропадает, приходится использовать замыкание
-            refresCurrentPage();
+            refreshCurrentPage();
             changeRegion(region);
         }
     }
@@ -146,16 +143,22 @@ public class TinkoffMobilePage extends Page {
             changeTargetField(textInputs);
         }
         public void setTextInTextArea(String text) {
-            if(xPathTextArea.toString().contains("nationality")){
+            if (xPathTextArea.toString().contains("nationality")) {
                 Select selectNat = setAndGetSelect(Enums.SelectLists.Nationality);
-                if(!selectNat.getCurrentValueList().equals("Не имею гражданства РФ"))
+                if (!selectNat.getCurrentValueList().equals("Не имею гражданства РФ"))
                     selectNat.changeList("Не имею гражданства РФ");
             }
-            new Actions(driver).moveToElement(driver.findElement(xPathTextArea))
-                    .click()
-                    .sendKeys(Keys.chord(Keys.CONTROL,"a",Keys.DELETE))
-                    .sendKeys(text)
-                    .perform();
+            Actions deleteAndSendText = new Actions(driver);
+            deleteAndSendText.moveToElement(driver.findElement(xPathTextArea)).click();
+            if (System.getProperty("browser").equals("chrome")) {
+                deleteAndSendText
+                        .sendKeys(Keys.chord(Keys.CONTROL, "a", Keys.DELETE)) //в хроме удалить что-то из поля работает через это
+                        .sendKeys(text)
+                        .perform();
+            } else {
+                driver.findElement(xPathTextArea).clear();
+                deleteAndSendText.sendKeys(text).perform();
+            }
         }
         public void changeTargetField(Enums.TextInputs selectedTextField){
             this.xPathTextArea = By.xpath(String.format("//input[@name = '%s']",selectedTextField.getNameOfTextInputArea()));

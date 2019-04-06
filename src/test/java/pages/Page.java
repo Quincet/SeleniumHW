@@ -27,6 +27,7 @@ public class Page {
         driverWait.until(x -> {
             boolean find = false;
             for (String title : driver.getWindowHandles()) {
+                System.out.println(title);
                 driver.switchTo().window(title);
                 if(x.getTitle().equals(windowName)){
                     find = true;
@@ -99,7 +100,7 @@ public class Page {
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
     }
 
-    public void refresCurrentPage(){
+    public void refreshCurrentPage(){
         driver.navigate().refresh();
     }
 

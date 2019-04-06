@@ -15,8 +15,9 @@ public class Picker {
     @Getter private final TinkoffMobilePage tinkoffMobilePage;
     @Getter private final GooglePage googlePage;
     @Getter private final TinkoffDocuments tinkoffDocuments;
-    @Getter private WebDriver driver;
+    @Getter private final WebDriver driver;
     @Getter private final WebDriverWait driverWait;
+    private final String browserName = System.getProperty("browser") == null ? "chrome" : System.getProperty("browser");
 
     public Picker() {
         driver = new EventFiringWebDriver(getNewDriver());
@@ -30,11 +31,10 @@ public class Picker {
     }
 
     private WebDriver getNewDriver() {
-        return BrowserFactory.getBrowser();
+        return BrowserFactory.getBrowser(browserName);
     }
 
     public void quit() {
         driver.quit();
-        driver = null;
     }
 }

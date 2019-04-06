@@ -14,15 +14,6 @@ import static org.junit.Assert.assertTrue;
 
 public class MobileOperator extends Runner {
     @Test
-    public void clickingMainForms() {
-        TinkoffMobilePage page = picker.getTinkoffMobilePage();
-        page.toSiteTinkoffMobile();
-        page.clickMainForms();
-        assertEquals("Укажите ваше ФИО", picker.getDriver().findElement(By.xpath("//div[contains(@class,'fio')]//div[contains(@class,'error-message')]")).getText());
-        assertEquals("Необходимо указать номер телефона", picker.getDriver().findElement(By.xpath("//div[contains(@class,'tel')]//div[contains(@class,'error-message')]")).getText());
-        assertEquals("Поле обязательное", picker.getDriver().findElement(By.xpath("//input[@name='temp_non_resident_nationality']/following::div[contains(@class,'error-message')]")).getText());
-    }
-    @Test
     public void fillingUnvalidValuesMainForm() {
         TinkoffMobilePage page = picker.getTinkoffMobilePage();
         page.toSiteTinkoffMobile();
@@ -51,7 +42,7 @@ public class MobileOperator extends Runner {
         pageTinkoffMobile.toSiteTinkoffMobile();
         pageTinkoffMobile.changeRegion("Москва");
         assertEquals("Москва и Московская область",pageTinkoffMobile.getCurrentRegion());
-        pageTinkoffMobile.refresCurrentPage();
+        pageTinkoffMobile.refreshCurrentPage();
         assertEquals("Москва и Московская область",pageTinkoffMobile.getCurrentRegion());
         String priceForMoskov = pageTinkoffMobile.getCurrentPriceForSim();
         pageTinkoffMobile.changeRegion("Краснодар");
@@ -88,10 +79,10 @@ public class MobileOperator extends Runner {
         textInput.setTextInTextArea("Генадий Васильевич Василий");
         textInput.changeTargetField(Enums.TextInputs.Telephone);
         textInput.setTextInTextArea("9999999999");
-        var checkBoxex = page.setAndGetCheckBox(Enums.CheckBoxes.SocialNetworks);
-        checkBoxex.setStatus(false);
-        checkBoxex.changeTargetField(Enums.CheckBoxes.Messagers);
-        checkBoxex.setStatus(false);
+        var checkBoxes = page.setAndGetCheckBox(Enums.CheckBoxes.SocialNetworks);
+        checkBoxes.setStatus(false);
+        checkBoxes.changeTargetField(Enums.CheckBoxes.Messagers);
+        checkBoxes.setStatus(false);
         assertEquals(page.getCurrentPriceForSim(),"Общая цена: 0 \u20BD");
         var button = page.getButton();
         button.clickButton();

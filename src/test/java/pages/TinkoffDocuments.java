@@ -20,10 +20,12 @@ public class TinkoffDocuments extends Page {
 
     public void downloadRandomFile(){
         try {
+            String previousTab = driver.getTitle();
             List<WebElement> documents = driver.findElements(By.xpath("//a[@target='_blank']"));
             WebElement file = documents.get((int)(Math.random()*documents.size()));
             String fileName = file.getAttribute("href").replace("https://static.tinkoff.ru/documents/mvno_documents/promo/","");
-            Path filePath = Paths.get(System.getProperty("user.dir") + "/src/test/resources/"+fileName).toAbsolutePath();
+            String pathName = (System.getProperty("user.dir") + "\\src\\test\\resources\\"+fileName).replace("\\",File.separator);
+            Path filePath = Paths.get(pathName).toAbsolutePath();
             Files.deleteIfExists(filePath);
             file.click();
             File filePdf = new File(filePath.toString());
@@ -32,7 +34,12 @@ public class TinkoffDocuments extends Page {
                     throw new FileNotFoundException("Не скачался файл");
                 Thread.sleep(500);
             }
-            logger.info(String.format("Файл скачался по пути %s", Paths.get(System.getProperty("user.dir") + "/src/test/resources/").toAbsolutePath()));
+            logger.info(String.format("Файл скачался по пути %s", Paths.get(pathName).toAbsolutePath()));
+            if(System.getProperty("browser").equals("firefox")){
+                switchToWindow("Новая вкладвка");
+                closeCurrentTab();
+                switchToWindow(previousTab);
+            }
         } catch (IOException |InterruptedException ex){
             ex.printStackTrace();
         }
