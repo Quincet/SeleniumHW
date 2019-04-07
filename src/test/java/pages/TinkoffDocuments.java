@@ -13,7 +13,6 @@ import java.nio.file.Paths;
 import java.util.List;
 
 public class TinkoffDocuments extends Page {
-
     public TinkoffDocuments(WebDriver driver) {
         super(driver);
     }

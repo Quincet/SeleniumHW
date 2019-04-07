@@ -13,7 +13,7 @@ public class Page {
     protected WebDriverWait driverWait;
     protected Logger logger = LoggerFactory.getLogger(Page.class);
 
-    public Page(WebDriver driver) {
+    protected Page(WebDriver driver) {
         this.driver = driver;
         this.driverWait = new WebDriverWait(driver,10);
     }

@@ -12,15 +12,23 @@ import static org.junit.Assert.assertTrue;
 
 public class MobileOperator extends Runner {
     @Test
+    public void clickingMainForms(){
+        TinkoffMobilePage page = factoryPages.getTinkoffMobilePage();
+        page    .toSiteTinkoffMobile()
+                .clickMainForms();
+        assertEquals("Укажите ваше ФИО", page.getErrorMessageFio().getText());
+        assertEquals("Необходимо указать номер телефона", page.getErrorMessageTel().getText());
+        assertEquals("Поле обязательное", page.getErrorMessageNatyonal().getText());
+    }
+    @Test
     public void fillingUnvalidValuesMainForm() {
         TinkoffMobilePage page = factoryPages.getTinkoffMobilePage();
-        page
-                .toSiteTinkoffMobile()
+        page    .toSiteTinkoffMobile()
                 .fillMainForms("Невалид --123","254564689216","unvalid","nonnat");
-        assertEquals("Допустимо использовать только буквы русского алфавита и дефис", page.errorMessageFio.getText());
-        assertEquals("Код оператора должен начинаться с цифры 9", page.errorMessageTel.getText());
-        assertEquals("Введите корректный адрес эл. почты", page.errorMessageMail.getText());
-        assertEquals("Выберите страну из выпадающего списка", page.errorMessageNatyonal.getText());
+        assertEquals("Допустимо использовать только буквы русского алфавита и дефис", page.getErrorMessageFio().getText());
+        assertEquals("Код оператора должен начинаться с цифры 9", page.getErrorMessageTel().getText());
+        assertEquals("Введите корректный адрес эл. почты", page.getErrorMessageMail().getText());
+        assertEquals("Выберите страну из выпадающего списка", page.getErrorMessageNatyonal().getText());
     }
     @Test
     public void switchBetweenTabs(){

@@ -1,5 +1,6 @@
 package pages;
 
+import lombok.Getter;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.CacheLookup;
@@ -7,37 +8,46 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import utils.Enums;
 
+@Getter
 public class TinkoffMobilePage extends Page {
     @FindBy(name = "fio")
-    @CacheLookup public WebElement inputFieldFio;
+    @CacheLookup private WebElement inputFieldFio;
     @FindBy(name = "phone_mobile")
-    @CacheLookup public WebElement inputFieldTel;
+    @CacheLookup private WebElement inputFieldTel;
     @FindBy(name = "email")
-    @CacheLookup public WebElement inputFieldMail;
+    @CacheLookup private WebElement inputFieldMail;
     @FindBy(name = "temp_non_resident_nationality")
-    @CacheLookup public WebElement inputFieldNatyonal;
+    @CacheLookup private WebElement inputFieldNatyonal;
     @FindBy(xpath = "//div[contains(@class,'fio')]//div[contains(@class,'error-message')]")
-    public WebElement errorMessageFio;
+    private WebElement errorMessageFio;
     @FindBy(xpath = "//div[contains(@class,'tel')]//div[contains(@class,'error-message')]")
-    public WebElement errorMessageTel;
+    private WebElement errorMessageTel;
     @FindBy(xpath = "//input[@name='email']/following::div[contains(@class,'error-message')]")
-    public WebElement errorMessageMail;
+    private WebElement errorMessageMail;
     @FindBy(xpath = "//input[contains(@name,'nationality')]/following::div[contains(@class,'error-message')]")
-    public WebElement errorMessageNatyonal;
+    private WebElement errorMessageNatyonal;
     @FindBy(xpath = "//div[contains(@class,'Region') and contains(@class,'title')]")
-    public WebElement buttonChangeRegion;
+    private WebElement buttonChangeRegion;
     @FindBy(css = "h3")
-    public WebElement currentPriceForSim;
+    private WebElement currentPriceForSim;
     @FindBy(css = "span.ui-select__value")
-    public WebElement selectFieldNatyonal;
+    private WebElement selectFieldNatyonal;
     @FindBy(xpath = "//button[contains(@class,'Button__button')]")
-    public WebElement mainYellowButton;
+    private WebElement mainYellowButton;
 
     public TinkoffMobilePage(WebDriver driver) {
         super(driver);
         PageFactory.initElements(driver,this);
     }
 
+    public TinkoffMobilePage clickMainForms(){
+        inputFieldFio.click();
+        inputFieldTel.click();
+        changeNationality();
+        inputFieldNatyonal.click();
+        inputFieldMail.click();
+        return this;
+    }
     public TinkoffMobilePage fillMainForms(String fio,String phone,String email,String nat){
         inputFieldFio.sendKeys(fio);
         inputFieldTel.sendKeys(phone);
