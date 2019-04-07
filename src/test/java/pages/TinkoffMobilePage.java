@@ -40,14 +40,6 @@ public class TinkoffMobilePage extends Page {
         PageFactory.initElements(driver,this);
     }
 
-    public TinkoffMobilePage clickMainForms(){
-        inputFieldFio.click();
-        inputFieldTel.click();
-        changeNationality();
-        inputFieldNatyonal.click();
-        inputFieldMail.click();
-        return this;
-    }
     public TinkoffMobilePage fillMainForms(String fio,String phone,String email,String nat){
         inputFieldFio.sendKeys(fio);
         inputFieldTel.sendKeys(phone);

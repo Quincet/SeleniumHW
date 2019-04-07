@@ -12,15 +12,6 @@ import static org.junit.Assert.assertTrue;
 
 public class MobileOperator extends Runner {
     @Test
-    public void clickingMainForms(){
-        TinkoffMobilePage page = factoryPages.getTinkoffMobilePage();
-        page    .toSiteTinkoffMobile()
-                .clickMainForms();
-        assertEquals("Укажите ваше ФИО", page.getErrorMessageFio().getText());
-        assertEquals("Необходимо указать номер телефона", page.getErrorMessageTel().getText());
-        assertEquals("Поле обязательное", page.getErrorMessageNatyonal().getText());
-    }
-    @Test
     public void fillingUnvalidValuesMainForm() {
         TinkoffMobilePage page = factoryPages.getTinkoffMobilePage();
         page    .toSiteTinkoffMobile()
