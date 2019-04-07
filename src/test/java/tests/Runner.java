@@ -1,31 +1,31 @@
 package tests;
 
-import app.Picker;
+import app.FactoryPages;
 import org.junit.AfterClass;
 import org.junit.Before;
 
 public abstract class Runner {
 
-    public static ThreadLocal<Picker> threadManager = new ThreadLocal<>();
-    protected static Picker picker;
+    private static ThreadLocal<FactoryPages> threadManager = new ThreadLocal<>();
+    protected static FactoryPages factoryPages;
 
     @Before
     public void setUp() {
         if (threadManager.get() != null) {
-            picker = threadManager.get();
+            factoryPages = threadManager.get();
             return;
         }
-        picker = new Picker();
-        threadManager.set(picker);
+        factoryPages = new FactoryPages();
+        threadManager.set(factoryPages);
     }
     /*@After // используется в режиме без переиспользования браузера
     public void close(){
-        picker.quit();
+        factoryPages.quit();
         threadManager.remove();
     }*/
 
     @AfterClass
     public static void tearDown() {
-        picker.quit();
+        factoryPages.quit();
     }
 }

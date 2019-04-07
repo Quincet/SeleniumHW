@@ -18,23 +18,23 @@ public class Page {
         this.driverWait = new WebDriverWait(driver,10);
     }
     public boolean isLoadedByTitle(String title) {
-        return driverWait.until(x -> x.getTitle().contains(title));
+        System.out.println(driver.getTitle());
+        return driverWait.until(x -> x.getTitle().toLowerCase().contains(title.toLowerCase()));
     }
     public boolean isUrlEqualsTo(String url){
         return driverWait.until(x -> x.getCurrentUrl().equals(url));
     }
     public void switchToWindow(String windowName){
         driverWait.until(x -> {
-            boolean find = false;
             for (String title : driver.getWindowHandles()) {
-                System.out.println(title);
                 driver.switchTo().window(title);
+                System.out.println(driver.getTitle());
                 if(x.getTitle().equals(windowName)){
-                    find = true;
+                    driver.switchTo().window(title);
                     break;
                 }
             }
-            return find;
+            return true;
         });
     }
 
@@ -56,9 +56,8 @@ public class Page {
         driverWait.until(x->{
             for (String window : driver.getWindowHandles()) {
                 driver.switchTo().window(window);
-                if(driver.getTitle().equals(currentTitleTab))
-                    continue;
-                driver.close();
+                if(!driver.getTitle().equals(currentTitleTab))
+                    driver.close();
             }
             return true;
         });
@@ -72,8 +71,6 @@ public class Page {
                 driver.switchTo().window(window);
                 if(driver.getTitle().toLowerCase().contains(similarNameOfTitle.toLowerCase()))
                     driver.close();
-                if(driver.getTitle().equals(currentTitleTab))
-                    continue;
             }
             return true;
         });

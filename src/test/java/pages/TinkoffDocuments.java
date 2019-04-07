@@ -18,9 +18,8 @@ public class TinkoffDocuments extends Page {
         super(driver);
     }
 
-    public void downloadRandomFile(){
+    public TinkoffDocuments downloadRandomFile(){
         try {
-            String previousTab = driver.getTitle();
             List<WebElement> documents = driver.findElements(By.xpath("//a[@target='_blank']"));
             WebElement file = documents.get((int)(Math.random()*documents.size()));
             String fileName = file.getAttribute("href").replace("https://static.tinkoff.ru/documents/mvno_documents/promo/","");
@@ -36,15 +35,16 @@ public class TinkoffDocuments extends Page {
             }
             logger.info(String.format("Файл скачался по пути %s", Paths.get(pathName).toAbsolutePath()));
             if(System.getProperty("browser").equals("firefox")){
-                switchToWindow("Новая вкладвка");
-                closeCurrentTab();
-                switchToWindow(previousTab);
+                driver.close();
+                switchToWindow("");
             }
         } catch (IOException |InterruptedException ex){
             ex.printStackTrace();
         }
+        return this;
     }
-    public void goToSite(){
+    public TinkoffDocuments goToSite(){
         goToPage("https://www.tinkoff.ru/mobile-operator/documents/");
+        return this;
     }
 }

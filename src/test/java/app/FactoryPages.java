@@ -1,5 +1,6 @@
 package app;
 
+import lombok.Value;
 import pages.GooglePage;
 import pages.TinkoffDocuments;
 import pages.TinkoffMobilePage;
@@ -10,16 +11,16 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import tests.BrowserFactory;
 
 import java.util.concurrent.TimeUnit;
+@Value
+public class FactoryPages {
+    @Getter private TinkoffMobilePage tinkoffMobilePage;
+    @Getter private GooglePage googlePage;
+    @Getter private TinkoffDocuments tinkoffDocuments;
+    private WebDriver driver;
+    private WebDriverWait driverWait;
+    private String browserName = System.getProperty("browser") == null ? "chrome" : System.getProperty("browser");
 
-public class Picker {
-    @Getter private final TinkoffMobilePage tinkoffMobilePage;
-    @Getter private final GooglePage googlePage;
-    @Getter private final TinkoffDocuments tinkoffDocuments;
-    @Getter private final WebDriver driver;
-    @Getter private final WebDriverWait driverWait;
-    private final String browserName = System.getProperty("browser") == null ? "chrome" : System.getProperty("browser");
-
-    public Picker() {
+    public FactoryPages() {
         driver = new EventFiringWebDriver(getNewDriver());
         ((EventFiringWebDriver) driver).register(new BrowserFactory.MyListener());
         driverWait = new WebDriverWait(driver,10);
