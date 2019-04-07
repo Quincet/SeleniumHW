@@ -33,10 +33,6 @@ public class TinkoffDocuments extends Page {
                 Thread.sleep(500);
             }
             logger.info(String.format("Файл скачался по пути %s", Paths.get(pathName).toAbsolutePath()));
-            if(System.getProperty("browser").equals("firefox")){
-                driver.close();
-                switchToWindow("");
-            }
         } catch (IOException |InterruptedException ex){
             ex.printStackTrace();
         }

@@ -18,7 +18,6 @@ public class FactoryPages {
     @Getter private TinkoffDocuments tinkoffDocuments;
     private WebDriver driver;
     private WebDriverWait driverWait;
-    private String browserName = System.getProperty("browser") == null ? "chrome" : System.getProperty("browser");
 
     public FactoryPages() {
         driver = new EventFiringWebDriver(getNewDriver());
@@ -32,7 +31,7 @@ public class FactoryPages {
     }
 
     private WebDriver getNewDriver() {
-        return BrowserFactory.getBrowser(browserName);
+        return BrowserFactory.getBrowser("chrome");
     }
 
     public void quit() {
