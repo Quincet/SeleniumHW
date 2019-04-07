@@ -49,12 +49,12 @@ public class TinkoffMobilePage extends Page {
         return this;
     }
     public TinkoffMobilePage fillMainForms(String fio,String phone,String email,String nat){
-        inputFieldFio.sendKeys(fio);
-        inputFieldTel.sendKeys(phone);
-        inputFieldMail.sendKeys(email);
+        driver.findElement(By.cssSelector("input[name=fio]")).sendKeys(fio);
+        driver.findElement(By.cssSelector("input[name=phone_mobile]")).sendKeys(phone);
+        driver.findElement(By.cssSelector("input[name=email]")).sendKeys(email);
         changeNationality();
-        inputFieldNatyonal.sendKeys(nat);
-        inputFieldMail.click();
+        driver.findElement(By.cssSelector("input[name=temp_non_resident_nationality]")).sendKeys(nat);
+        driver.findElement(By.cssSelector("input[name=email]")).click();
         return this;
     }
     public TinkoffMobilePage changeRegion(String region) {
