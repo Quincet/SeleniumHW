@@ -6,20 +6,20 @@ import Pages.TinkoffMobilePage;
 
 public class MobileOperator extends Runner {
     @Test
-    public void testMobileOperatorTestCase() {
+    public void clickMainForm() {
         TinkoffMobilePage page = picker.tinkoffMobilePage;
         page.toSite();
         page.clickMainForms();
         page.clickNationality();
-        page.assertClickgForm();
+        page.checkUnvalidValueByClickMainForms();
     }
     @Test
-    public void testMobileOperatorTestCase2() {
+    public void fillUnvalidValueMainForm() {
         TinkoffMobilePage page = picker.tinkoffMobilePage;
         page.toSite();
-        page.fillMainForms();
+        page.fillUnvalidValueMainForms();
         page.fillNationality();
-        page.assertFillingForm();
+        page.checkUnvalidValueByFillkMainForms();
     }
 }
 

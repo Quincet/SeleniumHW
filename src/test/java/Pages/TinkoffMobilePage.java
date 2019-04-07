@@ -36,7 +36,7 @@ public class TinkoffMobilePage {
                     return true;
         });
     }
-    public void fillMainForms(){
+    public void fillUnvalidValueMainForms(){
         ignoringAnimation(x -> {
                     fio.sendKeys("1578 - ,");
                     phoneMobile.sendKeys("2343251232");
@@ -72,13 +72,13 @@ public class TinkoffMobilePage {
                 .ignoring(ElementNotInteractableException.class)
                 .until(func);
     }
-    public void assertFillingForm(){
+    public void checkUnvalidValueByFillkMainForms(){
         assertEquals("Допустимо использовать только буквы русского алфавита и дефис", driver.findElement(By.xpath("//div[contains(text(),'Допустимо использовать только буквы русского')]")).getText());
         assertEquals("Код оператора должен начинаться с цифры 9", driver.findElement(By.xpath("//div[contains(text(),'Код оператора')]")).getText());
         assertEquals("Введите корректный адрес эл. почты", driver.findElement(By.xpath("//div[contains(text(),'Введите корректный адрес эл. почты')]")).getText());
         assertEquals("Выберите страну из выпадающего списка", driver.findElement(By.xpath("//div[contains(text(),'Выберите страну из выпадающего списка')]")).getText());
     }
-    public void assertClickgForm(){
+    public void checkUnvalidValueByClickMainForms(){
         assertEquals("Укажите ваше ФИО", driver.findElement(By.xpath("//div[contains(text(),'Укажите ваше ФИО')]")).getText());
         assertEquals("Необходимо указать номер телефона", driver.findElement(By.xpath("//div[contains(text(),'Необходимо указать номер телефона')]")).getText());
         assertEquals("Поле обязательное", driver.findElement(By.xpath("//div[contains(text(),'Поле обязательное')]")).getText());
