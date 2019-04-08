@@ -47,6 +47,7 @@ public class TinkoffMobilePage extends Page {
         changeNationality();
         inputFieldNatyonal.sendKeys(nat);
         inputFieldMail.click();
+        logger.info("Были прокликаны основные поля формы");
         return this;
     }
     public TinkoffMobilePage changeRegion(String region) {
@@ -61,6 +62,7 @@ public class TinkoffMobilePage extends Page {
             refreshCurrentPage();
             changeRegion(region);
         }
+        logger.info(String.format("Произошла смена региона на %s",region));
         return this;
     }
     public String getCurrentRegion(){
@@ -72,6 +74,7 @@ public class TinkoffMobilePage extends Page {
     private TinkoffMobilePage changeNationality(){
         selectFieldNatyonal.click();
         driver.findElement(By.xpath("//span[contains(text(),'Не имею гражданства РФ')]")).click();
+        logger.info("Произведена смена национальности на Не гражданин РФ");
         return this;
     }
     public TinkoffMobilePage toSiteTinkoffMobile(){
@@ -81,6 +84,7 @@ public class TinkoffMobilePage extends Page {
         } catch (NoSuchElementException e) {
             toSiteTinkoffMobile();
         }//страница не всегда полностью прогружается
+        logger.info("Перешли на сайт с тарифами оператора Тинькофф");
         return this;
     }
 
@@ -122,6 +126,7 @@ public class TinkoffMobilePage extends Page {
                 System.out.println("Не имеется такого значения");
                 openList();
             }
+            logger.info(String.format("В поля выбора значения %s было выбрано значение %s",list, newValue));
             return this;
         }
         public String getCurrentValueList(){
@@ -144,6 +149,7 @@ public class TinkoffMobilePage extends Page {
         public CheckBox setStatus(boolean status){
             if(getCurrentStatusCheckBox() != status)
                 driver.findElement(By.xpath(String.format("%s/parent::div",idCheckBox))).click();
+            logger.info(String.format("У чек бокса %s был установлен статус %s",getTextOfCheckBox(), status));
             return this;
         }
 
@@ -157,12 +163,13 @@ public class TinkoffMobilePage extends Page {
         }
 
         public String getTextOfCheckBox(){
-            return driver.findElement(By.xpath(String.format("'%s'/ancestor::div[contains(@class,'CheckboxWithDescription')]/label",idCheckBox))).getText();
+            return driver.findElement(By.xpath(String.format("%s/ancestor::div[contains(@class,'CheckboxWithDescription')]/label",idCheckBox))).getText();
         }
     }
 
     public class TextInput{
         private By xPathTextArea;
+        private String textInputName;
 
         private TextInput(Enums.TextInputs textInputs) {
             changeTargetField(textInputs);
@@ -183,11 +190,14 @@ public class TinkoffMobilePage extends Page {
             } else {
                 driver.findElement(xPathTextArea).clear();
                 deleteAndSendText.sendKeys(text).perform();
+
             }
+            logger.info(String.format("В поля ввода текста %s был введен текст %s",textInputName, text));
             return this;
         }
         public TextInput changeTargetField(Enums.TextInputs selectedTextField){
             this.xPathTextArea = By.xpath(String.format("//input[@name = '%s']",selectedTextField.getNameOfTextInputArea()));
+            textInputName = driver.findElement(By.xpath(String.format("//input[@name = '%s']/parent::div//span[contains(@class,'text')]",selectedTextField.getNameOfTextInputArea()))).getText();
             return this;
         }
         public String getCurrentValue(){
@@ -203,6 +213,7 @@ public class TinkoffMobilePage extends Page {
         public Button clickButton(){
             if(isButtonActive())
                 mainYellowButton.click();
+            logger.info("Главная желтая кнопка страницы была нажата");
             return this;
         }
         public boolean hasButton(){

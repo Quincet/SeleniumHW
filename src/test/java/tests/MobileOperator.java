@@ -26,7 +26,7 @@ public class MobileOperator extends Runner {
         GooglePage googlePage = factoryPages.getGooglePage();
         googlePage
                 .goToGoogle()
-                .searchOurRequest("мобайл тинькофф","мобайл тинькофф тарифы")
+                .searchOurRequest("тинькофф мобайл ","тинькофф мобайл тарифы") //мобайл тинькофф по запросу нет в гугле тарифов на выдаче списка, проверял 08.04.19
                 .findOurLinkAndClick("https://www.tinkoff.ru/mobile-operator/tariffs/");
         assertTrue(googlePage.isLoadedByTitle("Тарифы Тинькофф Мобайл"));
         googlePage.closeSimilarTabs("Google");
