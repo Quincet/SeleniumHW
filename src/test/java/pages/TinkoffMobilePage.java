@@ -26,6 +26,10 @@ public class TinkoffMobilePage extends Page {
     private WebElement errorMessageMail;
     @FindBy(xpath = "//input[contains(@name,'nationality')]/following::div[contains(@class,'error-message')]")
     private WebElement errorMessageNatyonal;
+    @FindBy(css = "div[class *=FIO] [class *=error-message]")
+    private WebElement cssErrorMessageFio;
+    @FindBy(css = "div[class *=tel] [class *=error-message]")
+    private WebElement cssErrorMessageTel;
     @FindBy(xpath = "//div[contains(@class,'Region') and contains(@class,'title')]")
     private WebElement buttonChangeRegion;
     @FindBy(css = "h3")

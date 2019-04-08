@@ -25,8 +25,8 @@ public class MobileOperator extends Runner {
         TinkoffMobilePage page = factoryPages.getTinkoffMobilePage();
         page    .toSiteTinkoffMobile()
                 .fillMainForms("Невалид --123","254564689216","unvalid","nonnat");
-        assertEquals("Допустимо использовать только буквы русского алфавита и дефис", page.getErrorMessageFio().getText());
-        assertEquals("Код оператора должен начинаться с цифры 9", page.getErrorMessageTel().getText());
+        assertEquals("Допустимо использовать только буквы русского алфавита и дефис", page.getCssErrorMessageFio().getText());
+        assertEquals("Код оператора должен начинаться с цифры 9", page.getCssErrorMessageTel().getText());
         assertEquals("Введите корректный адрес эл. почты", page.getErrorMessageMail().getText());
         assertEquals("Выберите страну из выпадающего списка", page.getErrorMessageNatyonal().getText());
     }
@@ -35,7 +35,7 @@ public class MobileOperator extends Runner {
         GooglePage googlePage = factoryPages.getGooglePage();
         googlePage
                 .goToGoogle()
-                .searchOurRequest("мобайл тинькофф","мобайл тинькофф тарифы")
+                .searchOurRequest("тинькофф мобайл ","тинькофф мобайл тарифы")//  гугле нет тарифов в поисковой выдаче если наоборот слова
                 .findOurLinkAndClick("https://www.tinkoff.ru/mobile-operator/tariffs/");
         assertTrue(googlePage.isLoadedByTitle("Тарифы Тинькофф Мобайл"));
         googlePage.closeSimilarTabs("Google");
