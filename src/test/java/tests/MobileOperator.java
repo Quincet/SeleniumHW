@@ -12,7 +12,7 @@ import static org.junit.Assert.assertTrue;
 
 public class MobileOperator extends Runner {
     @Test
-    public void fillingUnvalidValuesMainForm() {
+    public void fillingUnvalidValuesMainFormTest() {
         TinkoffMobilePage page = factoryPages.getTinkoffMobilePage();
         page    .toSiteTinkoffMobile()
                 .fillMainForms("Невалид --123","254564689216","unvalid","nonnat");
@@ -22,7 +22,7 @@ public class MobileOperator extends Runner {
         assertEquals("Выберите страну из выпадающего списка", page.getErrorMessageNatyonal().getText());
     }
     @Test
-    public void switchBetweenTabs(){
+    public void switchBetweenTabsTest(){
         GooglePage googlePage = factoryPages.getGooglePage();
         googlePage
                 .goToGoogle()
@@ -33,7 +33,7 @@ public class MobileOperator extends Runner {
         assertTrue(googlePage.isUrlEqualsTo("https://www.tinkoff.ru/mobile-operator/tariffs/"));
     }
     @Test
-    public void changeRegion(){
+    public void changeRegionTest(){
         TinkoffMobilePage pageTinkoffMobile = factoryPages.getTinkoffMobilePage();
         pageTinkoffMobile
                 .toSiteTinkoffMobile()
@@ -69,7 +69,7 @@ public class MobileOperator extends Runner {
         assertEquals(pageTinkoffMobile.getCurrentPriceForSim(),priceForKrasnodar);
     }
    @Test
-    public void notActiveButton(){
+    public void notActiveButtonTest(){
         TinkoffMobilePage page = factoryPages.getTinkoffMobilePage();
         page
                 .toSiteTinkoffMobile()
@@ -92,7 +92,7 @@ public class MobileOperator extends Runner {
         assertTrue(mainButton.hasButton());//почему то кнопка активна даже если выполняются условия из тест кейса
     }
    @Test
-    public void downloadFile(){
+    public void downloadFileTest(){
         factoryPages
                 .getTinkoffDocuments()
                 .goToSite()
