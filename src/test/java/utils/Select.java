@@ -3,6 +3,8 @@ package utils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.concurrent.TimeUnit;
 
@@ -10,6 +12,7 @@ public class Select{
     private String list;
     private final WebDriver driver;
     private final WebDriverWait driverWait;
+    private final Logger logger = LoggerFactory.getLogger(Select.class);
 
     public Select(Enums.SelectLists list, WebDriver driver) {
         this.driver = driver;
@@ -34,6 +37,7 @@ public class Select{
             System.out.println("Не имеется такого значения");
             openList();
         }
+        logger.info(String.format("В поля выбора значения %s было выбрано значение %s",list, newValue));
         return this;
     }
     public String getCurrentValueList(){

@@ -22,6 +22,7 @@ public class TinkoffMobilePage extends Page {
                 | !hasElement(By.xpath("//input[@name='temp_non_resident_nationality']/following::div[contains(@class,'error-message')]"))){
             clickMainForms(); //иногда некоторые формы просто не кликаются, приходится выполнять проверку на наличии ошибок на странице
         }
+        logger.info("Были прокликаны мейн формы на странице");
         return this;
     }
     public TinkoffMobilePage fillMainForms(String fio,String phone,String email,String nat){
@@ -31,6 +32,7 @@ public class TinkoffMobilePage extends Page {
         changeNationality();
         driver.findElement(By.cssSelector("input[name=temp_non_resident_nationality]")).sendKeys(nat);
         driver.findElement(By.cssSelector("input[name=email]")).click();
+        logger.info("Были заполненые мейн формы на странцие");
         return this;
     }
     public TinkoffMobilePage changeRegion(String region) {
@@ -50,6 +52,7 @@ public class TinkoffMobilePage extends Page {
             refresCurrentPage();
             changeRegion(region);
         }
+        logger.info("Регион сменился на " + region);
         return this;
     }
     public String getCurrentRegion(){
@@ -61,10 +64,12 @@ public class TinkoffMobilePage extends Page {
     private TinkoffMobilePage changeNationality(){
         driver.findElement(By.cssSelector("span.ui-select__value")).click();
         driver.findElement(By.xpath("//span[contains(text(),'Не имею гражданства РФ')]")).click();
+        logger.info("Сменили национальность на не из РФ");
         return this;
     }
     public TinkoffMobilePage toSiteTinkoffMobile(){
         goToPage("https://www.tinkoff.ru/mobile-operator/tariffs/");
+        logger.info("Перешли на сайт Тинькофф мобайл тарифы");
         return this;
     }
 }

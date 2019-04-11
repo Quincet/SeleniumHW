@@ -46,6 +46,7 @@ public class TinkoffDocuments extends Page {
 
     public TinkoffDocuments goToSite(){
         goToPage("https://www.tinkoff.ru/mobile-operator/documents/");
+        logger.info("Перешли на сайт тинькофф документы мобильного оператора");
         return this;
     }
 }

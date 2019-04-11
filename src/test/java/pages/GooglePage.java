@@ -44,6 +44,7 @@ public class GooglePage extends Page {
     }
     private GooglePage goToGoogle(){
         goToPage("https://www.google.ru/");
+        logger.info("Перешли на сайт гугла");
         return this;
     }
 }
