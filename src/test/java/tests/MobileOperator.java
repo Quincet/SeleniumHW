@@ -3,6 +3,7 @@ package tests;
 import lombok.var;
 import org.junit.Test;
 import pages.GooglePage;
+import pages.TinkoffDocuments;
 import pages.TinkoffMobilePage;
 import utils.Enums;
 
@@ -12,7 +13,7 @@ import static org.junit.Assert.assertTrue;
 
 public class MobileOperator extends Runner {
     @Test
-    public void fillingUnvalidValuesMainFormTest() {
+    public void fillingNotValidValuesMainFormTest() {
         TinkoffMobilePage page = factoryPages.getTinkoffMobilePage();
         page    .toSiteTinkoffMobile()
                 .fillMainForms("Невалид --123","254564689216","unvalid","nonnat");
@@ -37,13 +38,14 @@ public class MobileOperator extends Runner {
         TinkoffMobilePage pageTinkoffMobile = factoryPages.getTinkoffMobilePage();
         pageTinkoffMobile
                 .toSiteTinkoffMobile()
+                .checkLoadingTinkoffPage()
                 .changeRegion("Москва");
         assertEquals("Москва и Московская область",pageTinkoffMobile.getCurrentRegion());
         pageTinkoffMobile.refreshCurrentPage();
         assertEquals("Москва и Московская область",pageTinkoffMobile.getCurrentRegion());
-        String priceForMoskov = pageTinkoffMobile.getCurrentPriceForSim();
+        String priceForMoscow = pageTinkoffMobile.getCurrentPriceForSim();
         pageTinkoffMobile.changeRegion("Краснодар");
-        assertNotEquals(pageTinkoffMobile.getCurrentRegion(),priceForMoskov);
+        assertNotEquals(pageTinkoffMobile.getCurrentRegion(),priceForMoscow);
         var selectors = pageTinkoffMobile
                 .setAndGetSelect(Enums.SelectLists.Internet)
                 .changeList("Безлимитный интернет")
@@ -73,6 +75,7 @@ public class MobileOperator extends Runner {
         TinkoffMobilePage page = factoryPages.getTinkoffMobilePage();
         page
                 .toSiteTinkoffMobile()
+                .checkLoadingTinkoffPage()
                 .setAndGetSelect(Enums.SelectLists.Calls)
                 .changeList("0 минут")
                 .changeTargetField(Enums.SelectLists.Internet)
@@ -93,10 +96,11 @@ public class MobileOperator extends Runner {
     }
    @Test
     public void downloadFileTest(){
-        factoryPages
-                .getTinkoffDocuments()
-                .goToSite()
-                .downloadRandomFile();
+       TinkoffDocuments page = factoryPages.getTinkoffDocuments();
+       String pathToFil = page
+               .goToSite()
+               .downloadRandomFile();
+       assertTrue(page.checkDownloadFile(pathToFil));
     }
 }
 

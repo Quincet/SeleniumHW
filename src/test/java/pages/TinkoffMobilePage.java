@@ -47,7 +47,7 @@ public class TinkoffMobilePage extends Page {
         changeNationality();
         inputFieldNatyonal.sendKeys(nat);
         inputFieldMail.click();
-        logger.info("Были прокликаны основные поля формы");
+        logger.info("Были заполнены поля формы");
         return this;
     }
     public TinkoffMobilePage changeRegion(String region) {
@@ -58,7 +58,7 @@ public class TinkoffMobilePage extends Page {
                 ifHasElementClick(By.xpath(String.format("//div[contains(text(),'%s')]", region)));
                 return true;
             });
-        } catch (StaleElementReferenceException ex) { //вываливается ошибка иногда, так как окно с выбором регионов так и не пропадает, приходится использовать замыкание
+        } catch (StaleElementReferenceException ex) {
             refreshCurrentPage();
             changeRegion(region);
         }
@@ -79,12 +79,21 @@ public class TinkoffMobilePage extends Page {
     }
     public TinkoffMobilePage toSiteTinkoffMobile(){
         goToPage("https://www.tinkoff.ru/mobile-operator/tariffs/");
+        logger.info("Перешли на сайт с тарифами оператора Тинькофф");
+        return this;
+    }
+    public TinkoffMobilePage checkLoadingTinkoffPage(){
         try {
+            if(getCurrentRegion().contains("Нижегородская")){
+                changeRegion("Москва");
+                refreshCurrentPage();
+                checkLoadingTinkoffPage();
+            }
             driver.findElement(By.xpath("//select[@name='internet']/parent::div/div"));
         } catch (NoSuchElementException e) {
             toSiteTinkoffMobile();
-        }//страница не всегда полностью прогружается
-        logger.info("Перешли на сайт с тарифами оператора Тинькофф");
+            checkLoadingTinkoffPage();
+        }
         return this;
     }
 

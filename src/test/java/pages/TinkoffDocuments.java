@@ -13,34 +13,39 @@ import java.nio.file.Paths;
 import java.util.List;
 
 public class TinkoffDocuments extends Page {
+
     public TinkoffDocuments(WebDriver driver) {
         super(driver);
     }
 
-    public TinkoffDocuments downloadRandomFile(){
+    public String downloadRandomFile(){
+        List<WebElement> documents = driver.findElements(By.xpath("//a[@target='_blank']"));
+        WebElement file = documents.get((int)(Math.random()*documents.size()));
+        String fileName = file.getAttribute("href").replace("https://static.tinkoff.ru/documents/mvno_documents/promo/","");
+        String pathName = (System.getProperty("user.dir") + "\\src\\test\\resources\\"+fileName).replace("\\",File.separator);
+        file.click();
+        if(System.getProperty("browser").equals("firefox")){
+            driver.close();
+            switchToWindow("");
+        }
+        return pathName;
+    }
+    public boolean checkDownloadFile(String path){
         try {
-            List<WebElement> documents = driver.findElements(By.xpath("//a[@target='_blank']"));
-            WebElement file = documents.get((int)(Math.random()*documents.size()));
-            String fileName = file.getAttribute("href").replace("https://static.tinkoff.ru/documents/mvno_documents/promo/","");
-            String pathName = (System.getProperty("user.dir") + "\\src\\test\\resources\\"+fileName).replace("\\",File.separator);
-            Path filePath = Paths.get(pathName).toAbsolutePath();
+            Path filePath = Paths.get(path).toAbsolutePath();
             Files.deleteIfExists(filePath);
-            file.click();
             File filePdf = new File(filePath.toString());
-            for (int loop = 0;!filePdf.exists();loop++){
-                if(loop > 20)
+            for (int loop = 0; !filePdf.exists(); loop++) {
+                if (loop > 20)
                     throw new FileNotFoundException("Не скачался файл");
                 Thread.sleep(500);
             }
-            logger.info(String.format("Файл скачался по пути %s", Paths.get(pathName).toAbsolutePath()));
-            if(System.getProperty("browser").equals("firefox")){
-                driver.close();
-                switchToWindow("");
-            }
-        } catch (IOException |InterruptedException ex){
-            ex.printStackTrace();
+            logger.info(String.format("Файл скачался по пути %s", Paths.get(path).toAbsolutePath()));
+            return true;
+        } catch (IOException | InterruptedException ex){
+            System.out.println(ex.getMessage());
+            return false;
         }
-        return this;
     }
     public TinkoffDocuments goToSite(){
         goToPage("https://www.tinkoff.ru/mobile-operator/documents/");
