@@ -22,22 +22,22 @@ public class Enums {
     public enum CheckBoxes{
         Messagers{
             public String getXpathOfCheckBox(){
-                return "//input[@name='2256']";
+                return "//input[@name='2256' or @name='2050']";
             }
         },
         Music{
             public String getXpathOfCheckBox(){
-                return "//input[@name='2255']";
+                return "//input[@name='2255' or @name='2046']";
             }
         },
         SocialNetworks{
             public String getXpathOfCheckBox(){
-                return "//input[@name='2258']";
+                return "//input[@name='2258' or @name='2053']";
             }
         },
         Videos{
             public String getXpathOfCheckBox(){
-                return "//input[@name='2257']";
+                return "//input[@name='2257' or @name='2047']";
             }
         },
         UnlimitedSms{
@@ -46,13 +46,18 @@ public class Enums {
             }
         },
         ModemMode{
-          public String getXpathOfCheckBox(){
-              return "//input[@name='2058']";
-          }
+            public String getXpathOfCheckBox(){
+                return "//input[@name='2058']";
+            }
         },
         TransferTel{
             public String getXpathOfCheckBox(){
                 return "//input[@name='is_mnp']";
+            }
+        },
+        Agreement{
+            public String getXpathOfCheckBox(){
+                return "//input[@id='agreement']";
             }
         };
         public abstract String getXpathOfCheckBox();

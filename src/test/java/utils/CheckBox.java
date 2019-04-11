@@ -4,16 +4,17 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
 public class CheckBox {
-    private final String idCheckBox;
+    private String idCheckBox;
     private final WebDriver driver;
 
     public CheckBox(Enums.CheckBoxes checkBox, WebDriver driver) {
         this.driver = driver;
         this.idCheckBox = checkBox.getXpathOfCheckBox();
     }
-    public void setStatus(boolean status){
+    public CheckBox setStatus(boolean status){
         if(getCurrentStatusCheckBox() != status)
             driver.findElement(By.xpath(String.format("%s/parent::div",idCheckBox))).click();
+        return this;
     }
 
     public boolean getCurrentStatusCheckBox(){
@@ -21,7 +22,8 @@ public class CheckBox {
     }
 
     public CheckBox changeTargetField(Enums.CheckBoxes selectedCheckBox){
-        return new CheckBox(selectedCheckBox,driver);
+        this.idCheckBox = selectedCheckBox.getXpathOfCheckBox();
+        return this;
     }
 
     public String getTextOfCheckBox(){

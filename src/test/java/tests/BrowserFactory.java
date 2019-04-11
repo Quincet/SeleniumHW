@@ -23,11 +23,11 @@ public class BrowserFactory {
         Logger logger = LoggerFactory.getLogger(BrowserFactory.class);
         @Override
         public void beforeFindBy(By by, WebElement element, WebDriver driver) {
-            logger.info("Обращение к элементу " + by);
+            logger.debug("Обращение к элементу " + by);
         }
         @Override
         public void afterFindBy(By by, WebElement element, WebDriver driver) {
-            logger.info("Найден элемент " + by);
+            logger.debug("Найден элемент " + by);
         }
         @Override
         public void onException(Throwable throwable, WebDriver driver) {
@@ -38,7 +38,7 @@ public class BrowserFactory {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            logger.error(file.getAbsolutePath());
+            logger.debug(file.getAbsolutePath());
         }
     }
     public static WebDriver getBrowser(String browser){

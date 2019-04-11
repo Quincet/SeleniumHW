@@ -15,9 +15,10 @@ public class Button{
         return driver.findElement(buttonXpath).isEnabled();
     }
 
-    public void clickButton(){
+    public Button clickButton(){
         if(isButtonActive())
             driver.findElement(buttonXpath).click();
+        return this;
     }
     public boolean hasButton(){
         return driver.findElement(buttonXpath).isDisplayed();

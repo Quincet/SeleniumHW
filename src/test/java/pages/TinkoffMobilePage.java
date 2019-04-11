@@ -11,7 +11,7 @@ public class TinkoffMobilePage extends Page {
         super(driver);
     }
 
-    public void clickMainForms(){
+    public TinkoffMobilePage clickMainForms(){
         driver.findElement(By.xpath("//input[@name = 'fio']")).click();
         driver.findElement(By.xpath("//input[@name='phone_mobile']")).click();
         changeNationality();
@@ -22,32 +22,35 @@ public class TinkoffMobilePage extends Page {
                 | !hasElement(By.xpath("//input[@name='temp_non_resident_nationality']/following::div[contains(@class,'error-message')]"))){
             clickMainForms(); //иногда некоторые формы просто не кликаются, приходится выполнять проверку на наличии ошибок на странице
         }
+        return this;
     }
-    public void fillMainForms(String fio,String phone,String email,String nat){
+    public TinkoffMobilePage fillMainForms(String fio,String phone,String email,String nat){
         driver.findElement(By.cssSelector("input[name=fio]")).sendKeys(fio);
         driver.findElement(By.cssSelector("input[name=phone_mobile]")).sendKeys(phone);
         driver.findElement(By.cssSelector("input[name=email]")).sendKeys(email);
         changeNationality();
         driver.findElement(By.cssSelector("input[name=temp_non_resident_nationality]")).sendKeys(nat);
         driver.findElement(By.cssSelector("input[name=email]")).click();
+        return this;
     }
-    public void changeRegion(String region) {
+    public TinkoffMobilePage changeRegion(String region) {
         ifHasElementClick(By.xpath("//span[contains(@class,'Region') and contains(@class,'option') and not(contains(@class,'Rejection'))]"));
         try {
             driverWait.until(x -> {
                 x.findElement(By.xpath("//div[contains(@class,'region')]//div[@role='presentation']")).click();
                 ifHasElementClick(By.xpath(String.format("//div[contains(text(),'%s')]", region)));
-                x.findElement(By.xpath("//body")).sendKeys(Keys.ESCAPE); //бывает форма с выбором региона не закрывается, поэтому на крайний случай нажимаю ESC
+                x.findElement(By.xpath("//body")).sendKeys(Keys.ESCAPE);
                 return true;
             });
             if (hasElement(By.xpath("//div[@class='ui-form-app-popup-close-button']"))) {
                 driver.findElement(By.xpath("//div[@class='ui-form-app-popup-close-button']")).click();
                 changeRegion(region);
             }
-        } catch (StaleElementReferenceException ex) { //вываливается ошибка иногда, так как окно с выбором регионов так и не пропадает, приходится использовать замыкание
+        } catch (StaleElementReferenceException ex) {
             refresCurrentPage();
             changeRegion(region);
         }
+        return this;
     }
     public String getCurrentRegion(){
         return driver.findElement(By.xpath("//div[contains(@class,'Region') and contains(@class,'title')]")).getText();
@@ -55,11 +58,13 @@ public class TinkoffMobilePage extends Page {
     public String getCurrentPriceForSim(){
         return driver.findElement(By.cssSelector("h3")).getText();
     }
-    private void changeNationality(){
+    private TinkoffMobilePage changeNationality(){
         driver.findElement(By.cssSelector("span.ui-select__value")).click();
         driver.findElement(By.xpath("//span[contains(text(),'Не имею гражданства РФ')]")).click();
+        return this;
     }
-    public void toSiteTinkoffMobile(){
+    public TinkoffMobilePage toSiteTinkoffMobile(){
         goToPage("https://www.tinkoff.ru/mobile-operator/tariffs/");
+        return this;
     }
 }

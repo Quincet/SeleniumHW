@@ -7,7 +7,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.util.concurrent.TimeUnit;
 
 public class Select{
-    private final String list;
+    private String list;
     private final WebDriver driver;
     private final WebDriverWait driverWait;
 
@@ -16,13 +16,14 @@ public class Select{
         this.list = list.getNameOfSelector();
         driverWait = new WebDriverWait(driver,10);
     }
-    private void openList(){
+    private Select openList(){
         driverWait.until(x->{
             x.findElement(By.xpath(String.format("//select[@name='%s']/parent::div/div",list))).click();
             return true;
         });
+        return this;
     }
-    public void changeList(String newValue){
+    public Select changeList(String newValue){
         openList();
         if(hasValue(newValue)) {
             driverWait.until(x -> {
@@ -33,13 +34,15 @@ public class Select{
             System.out.println("Не имеется такого значения");
             openList();
         }
+        return this;
     }
     public String getCurrentValueList(){
         return driverWait.until(x-> x.findElement(By.xpath(String.format("//select[@name='%s']/parent::div//span[contains(@class,'title-flex-text') or contains(@class,'value')]",list))).getText());
     }
     public Select changeTargetField(Enums.SelectLists selectedList){
-        return new Select(selectedList,driver);
-    }
+        this.list = selectedList.getNameOfSelector();
+        return this;
+}
     private boolean hasValue(String value){
         driver.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
         boolean isExist = driver.findElements(By.xpath(String.format("//*[text() = '%s']",value))).size() > 0;
