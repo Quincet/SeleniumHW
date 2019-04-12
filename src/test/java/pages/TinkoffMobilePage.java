@@ -190,17 +190,11 @@ public class TinkoffMobilePage extends Page {
                     selectNat.changeList("Не имею гражданства РФ");
             }
             Actions deleteAndSendText = new Actions(driver);
-            deleteAndSendText.moveToElement(driver.findElement(xPathTextArea)).click();
-            if (System.getProperty("browser").equals("chrome")) {
-                deleteAndSendText
-                        .sendKeys(Keys.chord(Keys.CONTROL, "a", Keys.DELETE)) //в хроме удалить что-то из поля работает через это
-                        .sendKeys(text)
-                        .perform();
-            } else {
-                driver.findElement(xPathTextArea).clear();
-                deleteAndSendText.sendKeys(text).perform();
-
-            }
+            deleteAndSendText.moveToElement(driver.findElement(xPathTextArea))
+                    .click()
+                    .sendKeys(Keys.chord(Keys.CONTROL, "a", Keys.DELETE)) //в хроме удалить что-то из поля работает через это
+                    .sendKeys(text)
+                    .perform();
             logger.info(String.format("В поля ввода текста %s был введен текст %s",textInputName, text));
             return this;
         }
