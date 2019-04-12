@@ -49,6 +49,7 @@ public class TinkoffDocuments extends Page {
     }
     public TinkoffDocuments goToSite(){
         goToPage("https://www.tinkoff.ru/mobile-operator/documents/");
+        logger.info("Перешли на сайт с документами мобильного оператора Тинькофф");
         return this;
     }
 }

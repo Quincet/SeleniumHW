@@ -8,6 +8,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import utils.Enums;
 
+@Getter
 public class TinkoffMobilePage extends Page {
     @FindBy(name = "fio")
     @CacheLookup private WebElement inputFieldFio;
@@ -36,6 +37,7 @@ public class TinkoffMobilePage extends Page {
 
     public TinkoffMobilePage(WebDriver driver) {
         super(driver);
+        PageFactory.initElements(driver,this);
     }
 
     public TinkoffMobilePage fillMainForms(String fio,String phone,String email,String nat){
