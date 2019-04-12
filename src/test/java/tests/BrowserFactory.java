@@ -36,7 +36,7 @@ public class BrowserFactory {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            logger.error(file.getAbsolutePath());
+            logger.debug(file.getAbsolutePath());
         }
     }
     public static WebDriver getBrowser(String browser){

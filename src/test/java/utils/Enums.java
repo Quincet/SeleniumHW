@@ -46,9 +46,9 @@ public class Enums {
             }
         },
         ModemMode{
-          public String getXpathOfCheckBox(){
-              return "//input[@name='2058']";
-          }
+            public String getXpathOfCheckBox(){
+                return "//input[@name='2058']";
+            }
         },
         TransferTel{
             public String getXpathOfCheckBox(){
